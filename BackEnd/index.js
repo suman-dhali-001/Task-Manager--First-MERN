@@ -73,30 +73,30 @@ app.post("/register", async (req, res) => {
 
 //Google authentication using passport
 
-app.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+// app.get(
+//   "/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
 
-app.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: process.env.FRONTEND_DOMAIN,
-    successRedirect: `${process.env.FRONTEND_DOMAIN}/Home`,
-  })
-);
+// app.get(
+//   "/google/callback",
+//   passport.authenticate("google", {
+//     failureRedirect: process.env.FRONTEND_DOMAIN,
+//     successRedirect: `${process.env.FRONTEND_DOMAIN}/Home`,
+//   })
+// );
 
 //For Facebook Authentication
 
-app.get("/facebook", passport.authenticate("facebook", { scope: ["email"] }));
+// app.get("/facebook", passport.authenticate("facebook", { scope: ["email"] }));
 
-app.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", {
-    failureRedirect: process.env.FRONTEND_DOMAIN,
-    successRedirect: `${process.env.FRONTEND_DOMAIN}/Home`,
-  })
-);
+// app.get(
+//   "/facebook/callback",
+//   passport.authenticate("facebook", {
+//     failureRedirect: process.env.FRONTEND_DOMAIN,
+//     successRedirect: `${process.env.FRONTEND_DOMAIN}/Home`,
+//   })
+// );
 
 //Local Login
 app.post(
@@ -154,13 +154,13 @@ app.post("/forgotpass", async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: "jhonmoorthi85131@gmail.com",
+        user: "dhalisuman001@gmail.com",
         pass: "klxb xvje ygnr qvbo",
       },
     });
 
     var mailOptions = {
-      from: "jhonmoorthi85131@gmail.com",
+      from: "dhalisuman001@gmail.com",
       to: email,
       subject: "Forgot password for task manager",
       text: `${process.env.FRONTEND_DOMAIN}/ResetPass/${user._id}/${token}`,
@@ -177,7 +177,7 @@ app.post("/forgotpass", async (req, res) => {
 });
 
 const authenticator = (req, res, next) => {
-  if (!req.isAuthenticated()) {
+  if (!req?.isAuthenticated()) {
     return res.status(401).json({ error: "Login Required" });
   }
   next();

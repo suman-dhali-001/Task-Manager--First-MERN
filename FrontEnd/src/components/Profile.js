@@ -21,12 +21,12 @@ const Profile = ({ tasks }) => {
   axios.defaults.withCredentials = true;
   useEffect(() => {
     Aos.init({ duration: 1200 });
-    fetch("http://api.quotable.io/random")
-      .then((res) => res.json())
-      .then((quotes) => {
-        setQuote(quotes.content);
-        setAuthor(quotes.author);
-      });
+    // fetch("http://api.quotable.io/random")
+    //   .then((res) => res.json())
+    //   .then((quotes) => {
+    //     setQuote(quotes.content);
+    //     setAuthor(quotes.author);
+    //   });
     axios
       .get(`${process.env.REACT_APP_API_URL}/getUser`)
       .then((res) => {
