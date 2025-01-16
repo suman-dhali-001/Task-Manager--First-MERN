@@ -124,7 +124,7 @@ We appreciate your interest in contributing to our project! Whether you're a dev
 1. Fork the repository.
 2. Clone your forked repository:
  ```bash
-   git clone https://github.com/john12356/Task-Manager--First-MERN.git
+   git clone https://github.com/suman-dhali-001/Task-Manager--First-MERN.git
 ```
 ## Issues and Bug Reports
 
