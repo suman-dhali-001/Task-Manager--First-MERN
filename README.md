@@ -144,7 +144,7 @@ This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LIC
 We greatly appreciate all contributions to this project. Contributors will be acknowledged in our [CONTRIBUTORS.md](CONTRIBUTORS.md) file. Thank you for your support!
 ## Feedback
 
-For any queries and improvements please reach out to =dhalisuman001@gmail.com
+For any queries and improvements please reach out to dhalisuman001@gmail.com
 
 # Thank You
 
