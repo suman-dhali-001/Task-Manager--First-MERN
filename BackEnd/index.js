@@ -13,18 +13,29 @@ const TodoRoutes = require("./Routes/TodoRoutes");
 const NoteRoutes = require("./Routes/NoteRoutes");
 const TaskRoutes = require("./Routes/TaskRoutes");
 
-const PORT = 8080;
+const PORT = 8000;
 
 const app = express();
-app.use([
+
+console.log(process.env.FRONTEND_DOMAIN);
+
+// Configure CORS to allow all origins and specific headers
+app.use(
   cors({
-    origin: process.env.FRONTEND_DOMAIN,
+    origin: "http://localhost:3000", // Hardcode for testing
+    // or use environment variable with fallback
+    // origin: process.env.FRONTEND_DOMAIN || "http://localhost:3000",
     credentials: true,
-    methods: ["GET", "PUT", "PATCH", "PUT", "DELETE"],
-  }),
-  express.json(),
-  express.urlencoded({ extended: true }),
-]);
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
+
+// Middleware to parse JSON with a payload limit of 50mb
+app.use(express.json());
+
+// Middleware to parse URL-encoded data with a payload limit of 50mb
+app.use(express.urlencoded({ extended: true }));
 
 const sessionStore = new MongoStore({
   mongoUrl: process.env.MONGO_URL,
@@ -99,15 +110,31 @@ app.post("/register", async (req, res) => {
 // );
 
 //Local Login
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: process.env.FRONTEND_DOMAIN,
-  }),
-  (req, res) => {
-    res.json({ success: "successfully logged in" });
-  }
-);
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: info.message || "Invalid credentials"
+      });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json({ success: false, message: "Login failed" });
+      }
+
+      return res.json({
+        success: true,
+        message: "Successfully logged in"
+      });
+    });
+  })(req, res, next);
+});
 
 //logout
 app.get("/logout", (req, res, next) => {

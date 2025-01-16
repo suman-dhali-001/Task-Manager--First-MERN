@@ -10,7 +10,9 @@ import "./Calendar.css";
 
 const Calendar = () => {
   const [value, setValue] = useState(new Date());
-  const [highlightedDays, setHighlightedDays] = useState([1, 2, 13]);
+  // eslint-disable-next-line no-unused-vars
+  const [highlightedDays, _] = useState([1, 2, 13]);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StaticDatePicker

@@ -21,12 +21,18 @@ const Profile = ({ tasks }) => {
   axios.defaults.withCredentials = true;
   useEffect(() => {
     Aos.init({ duration: 1200 });
-    // fetch("http://api.quotable.io/random")
-    //   .then((res) => res.json())
-    //   .then((quotes) => {
-    //     setQuote(quotes.content);
-    //     setAuthor(quotes.author);
-    //   });
+    axios.get("https://api.quotable.io/quotes/random")
+      .then((response) => {
+        const quote = response.data[0];  // Returns array with single quote
+        setQuote(quote.content);
+        setAuthor(quote.author);
+      })
+      .catch((error) => {
+        console.error("Error fetching quote:", error);
+        // Fallback in case API fails
+        setQuote("The journey of a thousand miles begins with one step.");
+        setAuthor("Lao Tzu");
+      });
     axios
       .get(`${process.env.REACT_APP_API_URL}/getUser`)
       .then((res) => {
@@ -53,11 +59,16 @@ const Profile = ({ tasks }) => {
   console.log(upcomingTasks);
 
   const reloadQuote = () => {
-    fetch("http://api.quotable.io/random")
+    fetch("https://api.quotable.io/quotes/random")  // Changed to https://
       .then((res) => res.json())
-      .then((quotes) => {
-        setQuote(quotes.content);
-        setAuthor(quotes.author);
+      .then((quote) => {
+        setQuote(quote.content);
+        setAuthor(quote.author);
+      })
+      .catch((error) => {
+        console.error("Error fetching quote:", error);
+        setQuote("Life is what happens while you're busy making other plans.");
+        setAuthor("John Lennon");
       });
   };
 

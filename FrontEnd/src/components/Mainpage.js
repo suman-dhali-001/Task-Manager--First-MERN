@@ -42,7 +42,12 @@ export default function Mainpage({ toast, signIn, user }) {
       return;
     }
     axios
-      .post(`${process.env.REACT_APP_API_URL}/login`, userLogin)
+      .post(`${process.env.REACT_APP_API_URL}/login`, userLogin, {
+        withCredentials: true, // Enable sending cookies
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then((result) => {
         console.log(result);
         if (result.data.success) {
