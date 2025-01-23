@@ -22,7 +22,7 @@ console.log(process.env.FRONTEND_DOMAIN);
 // Configure CORS to allow all origins and specific headers
 app.use(
   cors({
-    origin: "http://localhost:3000", // Hardcode for testing
+    origin: process.env.FRONTEND_DOMAIN, // Hardcode for testing
     // or use environment variable with fallback
     // origin: process.env.FRONTEND_DOMAIN || "http://localhost:3000",
     credentials: true,
