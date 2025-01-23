@@ -14,7 +14,7 @@ export default function Toggler({ toast }) {
 
   return (
     <div className="whole">
-      <h1 id="body-head">Task manager</h1>
+      <h1 id="body-head">Action Planner</h1>
       <div className={`container${isActive ? " active" : ""}`} id="container">
         <Mainpage toast={toast} signIn={signIn} />
         <div className="toggle-container">

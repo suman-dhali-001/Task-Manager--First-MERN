@@ -24,7 +24,7 @@ const MainTask = ({ tasks, setTasks }) => {
           <span id="scroller-con-col">" Master Your Day With Tasks."</span>
           <br />
           <br />
-          Revoloutionize your productivity journey with our Task Manager.
+          Revoloutionize your productivity journey with our Action Planner.
         </div>
         <div className="scroller-con">
           <div className="dots">
