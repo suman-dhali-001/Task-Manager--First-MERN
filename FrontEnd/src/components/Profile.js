@@ -56,7 +56,7 @@ const Profile = ({ tasks }) => {
       .catch((err) => console.log(err));
   }, [tasks]);
 
-  console.log(upcomingTasks);
+  // console.log(upcomingTasks);
 
   const reloadQuote = () => {
     fetch("https://api.quotable.io/quotes/random")  // Changed to https://

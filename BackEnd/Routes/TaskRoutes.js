@@ -8,7 +8,7 @@ taskRoutes.get("/getTask", async (req, res) => {
   });
   let task = await dataModel.findById(_id);
   if (!task) task = await newTask.save();
-  console.log(task.tasks);
+  // console.log(task.tasks);
   res.json(task.tasks);
 });
 
@@ -24,8 +24,10 @@ taskRoutes.post("/postTask", async (req, res) => {
 });
 
 taskRoutes.patch("/updateTask/:id", async (req, res) => {
+
   const { id } = req.params;
   const { done } = req.body;
+
   await dataModel
     .findOneAndUpdate(
       { "tasks.id": id },

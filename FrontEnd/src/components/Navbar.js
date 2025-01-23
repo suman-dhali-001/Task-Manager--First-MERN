@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { LuListTodo } from "react-icons/lu";
 import { IoCalendarNumber } from "react-icons/io5";
-import { FaRegNoteSticky } from "react-icons/fa6";
+// import { FaRegNoteSticky } from "react-icons/fa6";
 import axios from "axios";
 import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +23,9 @@ const Navbar = () => {
     navigate("/Home/task");
   }
 
-  function openNotes() {
-    navigate("/Home/notes");
-  }
+  // function openNotes() {
+  //   navigate("/Home/notes");
+  // }
   function gototDashboard() {
     navigate("/Home");
   }
@@ -53,9 +53,9 @@ const Navbar = () => {
       <button onClick={openTask} className="nav-icon skull">
         <IoCalendarNumber size={20} color="white" />
       </button>
-      <button onClick={openNotes} className="nav-icon skull">
+      {/* <button onClick={openNotes} className="nav-icon skull">
         <FaRegNoteSticky size={20} color="white" />
-      </button>
+      </button> */}
       <button className="nav-icon skull" onClick={logOut}>
         <BiLogOut size={22} color="white" />
       </button>

@@ -27,6 +27,7 @@ const currTaskSchema = new mongoose.Schema(
       taskName: { type: String },
       priority: { type: String },
       deadline: { type: String },
+      description: { type: String },
     },
     done: { type: Boolean },
   },

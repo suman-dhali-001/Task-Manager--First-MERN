@@ -4,16 +4,21 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import "./styles/task.css";
 import Aos from "aos";
 import axios from "axios";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import "aos/dist/aos.css";
+import ViewTask from "./ViewTask";
 
 const Task = ({ toast, tasks, setTasks }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [completedTasks, setCompletedTasks] = useState([]);
   const [task, setTask] = useState({
     taskName: "",
-    priority: "",
+    priority: "top",
     deadline: "",
+    description: "",
   });
+
 
   axios.defaults.withCredentials = true;
   useEffect(() => {
@@ -36,7 +41,7 @@ const Task = ({ toast, tasks, setTasks }) => {
     });
   }
 
-  const addTask = () => {
+  const addTask = (onClose) => {
     if (task.taskName.trim() === "" || task.deadline === "") {
       toast.error("Please enter task and deadline");
       return;
@@ -55,7 +60,8 @@ const Task = ({ toast, tasks, setTasks }) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/task/postTask`, newTask)
       .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => onClose());
 
     setTasks([...tasks, newTask]);
     toast.success("Added Successfully");
@@ -121,33 +127,72 @@ const Task = ({ toast, tasks, setTasks }) => {
         </button>
       </header>
       <div className="add-div">
-        <input
-          type="text"
-          placeholder="Enter task"
-          name="taskName"
-          value={task.taskName || ""}
-          onChange={(e) => handleOnchange(e)}
-        />
-        <select
-          name="priority"
-          placeholder="Select Priority"
-          value={task.priority}
-          onChange={(e) => handleOnchange(e)}
+
+
+        <Popup
+          trigger={<button id="add-bt"> Add Task </button>}
+          modal
+          nested
         >
-          <option value="top">Top priority</option>
-          <option value="average">Average priority</option>
-          <option value="low">Low priority</option>
-        </select>
-        <input
-          type="date"
-          name="deadline"
-          value={task.deadline}
-          onChange={(e) => handleOnchange(e)}
-        />
-        <button id="add-bt" onClick={addTask}>
-          Add
-        </button>
+          {close => (
+            <div className="modal">
+              <button className="close" onClick={close}>
+                &times;
+              </button>
+              <div className="header"> Add Task </div>
+              <div className="content">
+                <input
+                  type="text"
+                  placeholder="Enter task"
+                  name="taskName"
+                  value={task.taskName || ""}
+                  onChange={(e) => handleOnchange(e)}
+                />
+                <textarea
+                  placeholder="Enter task description"
+                  name="description"
+                  value={task.description || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  rows="4"
+                />
+                <select
+                  name="priority"
+                  placeholder="Select Priority"
+                  value={task.priority}
+                  onChange={(e) => handleOnchange(e)}
+                >
+                  <option value="top">Top priority</option>
+                  <option value="average">Average priority</option>
+                  <option value="low">Low priority</option>
+                </select>
+                <input
+                  type="date"
+                  name="deadline"
+                  value={task.deadline || ""}
+                  onChange={(e) => handleOnchange(e)}
+                />
+                <div className="actions">
+                  <button
+                    className="btn close-btn"
+                    onClick={() => {
+                      console.log("modal closed");
+                      close();
+                    }}
+                  >
+                    Close
+                  </button>
+                  <button className="btn add-btn" onClick={() => addTask(close)}>
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </Popup>
+
+
       </div>
+
       <main className="task-body" data-aos="zoom-out">
         <h3>current tasks</h3>
         <div className="cur-task-list" data-aos="zoom-in">
@@ -158,6 +203,7 @@ const Task = ({ toast, tasks, setTasks }) => {
                 <th>Prioriy</th>
                 <th>deadline</th>
                 <th>action</th>
+                <th>View</th>
               </tr>
             </thead>
             <tbody>
@@ -166,7 +212,7 @@ const Task = ({ toast, tasks, setTasks }) => {
                   <td>{eachTask.task.taskName}</td>
                   <td>{eachTask.task.priority}</td>
                   <td>{eachTask.task.deadline}</td>
-                  <td>
+                  <td className="action">
                     {!eachTask.done && (
                       <button
                         id="done-bt"
@@ -175,6 +221,9 @@ const Task = ({ toast, tasks, setTasks }) => {
                         done
                       </button>
                     )}
+                  </td>
+                  <td className="action">
+                    <ViewTask currTask={eachTask} />
                   </td>
                 </tr>
               ))}
@@ -190,6 +239,7 @@ const Task = ({ toast, tasks, setTasks }) => {
                 <th>priority</th>
                 <th>deadline</th>
                 <th>action</th>
+                <th>View</th>
               </tr>
             </thead>
             <tbody>
@@ -205,6 +255,9 @@ const Task = ({ toast, tasks, setTasks }) => {
                     >
                       <AiFillDelete size={20} color="#FF6969" />
                     </button>
+                  </td>
+                  <td>
+                    <ViewTask currTask={eachTask} />
                   </td>
                 </tr>
               ))}

@@ -10,13 +10,13 @@ export default function Mainpage({ toast, signIn, user }) {
   const [userLogin, setUserLogin] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  const googleAuth = () => {
-    window.open(`${process.env.REACT_APP_API_URL}/google`, "_self");
-  };
+  // const googleAuth = () => {
+  //   window.open(`${process.env.REACT_APP_API_URL}/google`, "_self");
+  // };
 
-  const fbAuth = () => {
-    window.open(`${process.env.REACT_APP_API_URL}/facebook`, "_self");
-  };
+  // const fbAuth = () => {
+  //   window.open(`${process.env.REACT_APP_API_URL}/facebook`, "_self");
+  // };
   const openForgotPass = () => {
     navigate("/forgotpass");
   };
@@ -61,6 +61,7 @@ export default function Mainpage({ toast, signIn, user }) {
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Enter the correct details");
       });
     setUserLogin({ email: "", password: "" });
   };
@@ -90,10 +91,10 @@ export default function Mainpage({ toast, signIn, user }) {
         <form method="POST" action="/" onSubmit={(e) => handleRegister(e)}>
           <h1>Create Account</h1>
           <div className="social-icons">
-            <button type="button" onClick={googleAuth} className="icon">
+            <button type="button" className="icon">
               <FcGoogle size={22} />
             </button>
-            <button type="button" onClick={fbAuth} className="icon">
+            <button type="button" className="icon">
               <FaFacebook size={22} />
             </button>
           </div>
@@ -132,10 +133,10 @@ export default function Mainpage({ toast, signIn, user }) {
         <form method="POST" action="/" onSubmit={(e) => handleLogin(e)}>
           <h1>Sign In</h1>
           <div className="social-icons">
-            <button type="button" onClick={googleAuth} className="icon">
+            <button type="button" className="icon">
               <FcGoogle size={22} />
             </button>
-            <button type="button" onClick={fbAuth} className="icon">
+            <button type="button" className="icon">
               <FaFacebook size={22} />
             </button>
           </div>
